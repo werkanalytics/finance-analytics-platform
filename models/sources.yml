@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: src
+    schema: src
+    tables:
+      - name: stock_prices
+      - name: tickers
+      - name: company
+      - name: financials
+      - name: recommendations
+      - name: balance_sheet
+      - name: income_statement
+      - name: cash_flow
+      - name: earnings_dates

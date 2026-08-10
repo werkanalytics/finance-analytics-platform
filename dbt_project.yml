@@ -1,0 +1,29 @@
+name: 'finance_dwh'
+version: '1.0.0'
+
+profile: 'finance_dwh'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  finance_dwh:
+    staging:
+      +schema: stg
+      +materialized: view
+
+    dwh:
+      +schema: dwh
+      +materialized: table
+
+    mart:
+      +schema: mart
+      +materialized: table
