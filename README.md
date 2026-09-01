@@ -95,6 +95,9 @@ Market Summary
 Company Details
 Revenue Analysis
 
+<img width="1297" height="757" alt="image" src="https://github.com/user-attachments/assets/4bdc8059-6dc4-4137-bc18-b7a7e2b661bf" />
+
+
 # Installation
 
 git clone
