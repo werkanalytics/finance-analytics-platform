@@ -80,8 +80,11 @@ dbt manages model dependencies and provides end-to-end lineage from raw financia
 
 <img width="1865" height="752" alt="dbt-dag" src="https://github.com/user-attachments/assets/bba47987-50c0-48bd-a33e-eb255c37078c" />
 
+
 Apache Airflow Diagram:
-<img width="1551" height="734" alt="image" src="https://github.com/user-attachments/assets/016cf708-2841-4bcf-8d7b-f170899a90c0" />
+
+<img width="1542" height="608" alt="image" src="https://github.com/user-attachments/assets/2c823893-6ef6-4944-97c2-08e6933b869a" />
+
 
 
 
