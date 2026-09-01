@@ -9,7 +9,7 @@ Designed for production-ready deployments.
 
 # Finance Analytics Platform
 
-Production-ready finance analytics platform built with PostgreSQL, Apache Airflow, dbt and Apache Superset.
+production-oriented finance analytics platform built with PostgreSQL, Apache Airflow, dbt and Apache Superset.
 
 ---
 
@@ -48,15 +48,8 @@ The platform automates data ingestion, transformation, warehousing and dashboard
 
 ## Architecture
 
-Yahoo Finance
-↓
-Python ETL
-↓
-PostgreSQL
-↓
-dbt
-↓
-Apache Superset
+<img width="1536" height="1024" alt="dwh_mimari" src="https://github.com/user-attachments/assets/edb45501-4dcf-4bce-ae69-8cab648eb81e" />
+
 
 
 ## Data Source
