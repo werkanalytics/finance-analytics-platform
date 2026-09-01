@@ -9,7 +9,7 @@ Designed for production-ready deployments.
 
 # Finance Analytics Platform
 
-production-oriented finance analytics platform built with PostgreSQL, Apache Airflow, dbt and Apache Superset.
+End-to-end financial analytics platform for ingesting, transforming, modeling and visualizing financial data using PostgreSQL, Airflow, dbt and Superset.
 
 ---
 
