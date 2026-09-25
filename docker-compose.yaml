@@ -270,6 +270,38 @@ services:
   # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
   # or by explicitly targeted on the command line e.g. docker-compose up flower.
   # See: https://docs.docker.com/compose/profiles/
+  superset:
+    build:
+      context: .
+      dockerfile: Dockerfile.superset
+    image: finance-superset:latest
+    container_name: finance-superset
+
+    ports:
+      - "8088:8088"
+
+    environment:
+      SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
+
+    command: >
+      /bin/sh -c "
+      superset db upgrade &&
+      superset fab create-admin
+      --username ${SUPERSET_ADMIN_USERNAME:-admin}
+      --firstname Admin
+      --lastname User
+      --email ${SUPERSET_ADMIN_EMAIL:-admin@example.com}
+      --password ${SUPERSET_ADMIN_PASSWORD:-admin} || true &&
+      superset init &&
+      gunicorn
+      --bind 0.0.0.0:8088
+      --workers 2
+      --timeout 120
+      'superset.app:create_app()'
+      "
+
+    restart: unless-stopped
+
   flower:
     <<: *airflow-common
     command: celery flower
