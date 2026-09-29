@@ -1,11 +1,15 @@
 import pandas as pd
 import yfinance as yf
 from sqlalchemy import text
-
 from etl.database import get_engine
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def load_cash_flow():
+    logger.info("Cash Flow ETL started")
+    
     engine = get_engine()
 
     tickers_src = pd.read_sql(
@@ -14,6 +18,10 @@ def load_cash_flow():
     )
 
     tickers = tickers_src["ticker"].tolist()
+    
+    if not tickers:
+        raise ValueError("No tickers found in src.tickers")
+    
     financial_rows = []
 
     for symbol in tickers:
@@ -36,15 +44,19 @@ def load_cash_flow():
             fin["report_date"] = pd.to_datetime(fin["report_date"]).dt.date
 
             financial_rows.append(fin)
+    
+    
+                            
 
-            print(f"{symbol} cash flow tamamlandı")
+            
 
-        except Exception as e:
-            print(f"{symbol} hata: {e}")
-
+        except Exception:
+            logger.exception("Failed to fetch cash flow for %s", symbol)
+            
+        
     if not financial_rows:
-        print("Cash flow verisi bulunamadı.")
-        return
+            raise ValueError("No tickers found in financial_rows")
+           
 
     financial_df = pd.concat(financial_rows, ignore_index=True)
 
@@ -71,4 +83,4 @@ def load_cash_flow():
                 row.to_dict()
             )
 
-    print("Cash flow tablosu yüklendi.")
+    logger.info("Cash Flow loaded successfully. Row count : %s", len(financial_df))

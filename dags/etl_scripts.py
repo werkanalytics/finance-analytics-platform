@@ -4,8 +4,7 @@ sys.path.append("/opt/airflow")
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.operators.bash import BashOperator
-from datetime import datetime
-
+from datetime import datetime,timedelta
 from etl.ticker import load_tickers
 from etl.company import load_company
 from etl.stock_prices import load_stock_prices
@@ -16,6 +15,10 @@ from etl.cash_flow import load_cash_flow
 from etl.recommendations import load_recommendations
 from etl.earnings_dates import load_earnings_dates
 
+default_args = {
+    "retries":2,
+    "retry_delay":timedelta(minutes=5),
+}
 
 with DAG(
     dag_id="finance_dwh",
@@ -23,6 +26,7 @@ with DAG(
     schedule=None,
     catchup=False,
     max_active_runs=1,
+    default_args = default_args,
 ) as dag:
 
     load_tickers_task = PythonOperator(
