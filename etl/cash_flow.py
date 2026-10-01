@@ -46,10 +46,6 @@ def load_cash_flow():
             financial_rows.append(fin)
     
     
-                            
-
-            
-
         except Exception:
             logger.exception("Failed to fetch cash flow for %s", symbol)
             

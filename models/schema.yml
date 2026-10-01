@@ -1,21 +1,26 @@
-
 version: 2
 
 models:
-  - name: my_first_dbt_model
-    description: "A starter dbt model"
+  - name: lu_company
+    description: "Company lookup table"
+
     columns:
-      - name: id
+      - name: ticker_key
         description: "The primary key for this table"
         data_tests:
           - unique
           - not_null
 
-  - name: my_second_dbt_model
-    description: "A starter dbt model"
-    columns:
-      - name: id
-        description: "The primary key for this table"
+      - name: ticker
+        description: "Ticker name for each company"
         data_tests:
           - unique
           - not_null
+
+      - name: price_date
+        data_tests:
+          - not null
+
+      - name: close_price
+        data_tests:
+          - not null
