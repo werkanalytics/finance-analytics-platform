@@ -6,6 +6,14 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+def validate_company(row:dict) -> bool:
+    if not row["ticker"]:
+        raise ValueError("Ticker not found!")
+    
+    if not row["company_name"]:
+        raise ValueError("Company not found")
+    
+
 
 
 def load_company():

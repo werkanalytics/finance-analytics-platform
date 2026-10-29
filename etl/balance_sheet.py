@@ -7,6 +7,26 @@ import logging
 logger = logging.getLogger(__name__)
 
 
+def validate_balance_sheet(row:dict) -> bool:
+    if not row["ticker"]:
+        raise ValueError("Ticker cannot be empty")
+    
+    if not row["metric_name"]:
+        raise ValueError("Metric name cannot be empty")
+    
+    if pd.isna(row["report_date"]):
+        raise ValueError("Report date cannot be empty")
+    
+    if pd.isna(row["metric_value"]):
+        raise ValueError("Metric value cannot be empty")
+
+    return True
+                    
+    
+            
+            
+
+
 def load_balance_sheet():
     logger.info("Balance sheet ETL started")
     try:
@@ -42,18 +62,25 @@ def load_balance_sheet():
 
                 financial_rows.append(fin)
 
-                print(f"{symbol} balance sheet tamamlandı")
+                logger.info("%s balance sheet completed", symbol)
 
-            except Exception as e:
-                print(f"{symbol} hata: {e}")
+            except Exception:
+                logger.exception("%s balance sheet failed", symbol)
+                
+                
 
         if not financial_rows:
+            logger.warning("No balance sheet data found")
             return
+            
 
         financial_df = pd.concat(financial_rows, ignore_index=True)
 
         with engine.begin() as conn:
             for _, row in financial_df.iterrows():
+                validate_balance_sheet(row.to_dict())
+                
+                
                 conn.execute(
                     text("""
                         INSERT INTO src.balance_sheet (
@@ -74,8 +101,13 @@ def load_balance_sheet():
                     """),
                     row.to_dict()
                 )
+                
+        
+       
+        
+        
     except Exception:
-        logger.exception("Stock price ETL failed")
+        logger.exception("Balance sheet ETL failed")
         raise
     
     logger.info("Balance sheet loaded successfully")

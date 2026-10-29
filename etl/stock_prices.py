@@ -94,6 +94,21 @@ def load_stock_prices():
                     """),
                     row.to_dict()
                 )
+        def validate_stock_price(row:dict) -> bool:
+            if row["volume"] < 0:
+                raise ValueError("Volume cannot be negative")
+            
+            if row["high_price"] < row["low_price"]:
+                raise ValueError("High price cannot be lower than low price")
+            
+            return True
+        
+                
+        
+        
+        
+        
+        
     except Exception:
         logger.exception("Stock price ETL failed")
         raise
