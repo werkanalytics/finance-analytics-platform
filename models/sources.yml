@@ -13,3 +13,4 @@ sources:
       - name: income_statement
       - name: cash_flow
       - name: earnings_dates
+      - name: crypto_currencies

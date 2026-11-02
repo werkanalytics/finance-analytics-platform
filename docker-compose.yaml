@@ -52,6 +52,12 @@ x-airflow-common: &airflow-common
   image: finance-dwh-airflow:latest
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    TWELVE_DATA_KEY: ${TWELVE_DATA_KEY}
+    POSTGRES_HOST: host.docker.internal
+    POSTGRES_PORT: "5432"
+    POSTGRES_DB: postgres
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
     AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0

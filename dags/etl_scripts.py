@@ -14,6 +14,7 @@ from etl.balance_sheet import load_balance_sheet
 from etl.cash_flow import load_cash_flow
 from etl.recommendations import load_recommendations
 from etl.earnings_dates import load_earnings_dates
+from etl.Twelve_Data_Jobs.crypto_currencies import load_crypto_currencies
 
 default_args = {
     "retries":2,
@@ -73,6 +74,11 @@ with DAG(
         task_id="load_earnings_dates",
         python_callable=load_earnings_dates
     )
+    
+    load_crypto_currencies_task = PythonOperator(
+        task_id = "load_crypto_currencies",
+        python_callable = load_crypto_currencies
+    )
 
     dbt_build = BashOperator(
         task_id="dbt_build",
@@ -87,5 +93,6 @@ with DAG(
         load_balance_sheet_task,
         load_cash_flow_task,
         load_recommendations_task,
-        load_earnings_dates_task
+        load_earnings_dates_task,
+        load_crypto_currencies_task
     ] >> dbt_build
