@@ -51,6 +51,7 @@ def load_crypto_currency_exchanges():
         
         with engine.begin as conn:
             df.to_sql(
+                con=conn,
                 name="tmp_crypto_exchanges",
                 schema="src",
                 if_exists="replace",

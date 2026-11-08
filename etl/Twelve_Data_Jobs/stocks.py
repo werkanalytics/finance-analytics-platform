@@ -49,7 +49,7 @@ def load_stocks():
         
         
         
-        with engine.begin as conn:
+        with engine.begin() as conn:
             df.to_sql(
             name="tmp_stocks",
             schema="src",
@@ -69,7 +69,7 @@ def load_stocks():
                                     ,country
                                     ,type FROM src.tmp_stocks"""))
             
-            conn.executr(text(""" drop table src.tmp_stocks """))
+            conn.execute(text(""" drop table src.tmp_stocks """))
             
             logger.info("stocks etl completed. Rows : %s", len(df))
             
